@@ -13,4 +13,10 @@ try {
   process.stderr.write(`cannot read entry.txt: ${err.message}\n`);
   process.exit(1);
 }
+// Guard the entry contract: exactly two sentences, at most 400 characters.
+const sentences = entry.split(/(?<=[.!?])\s+/).filter(Boolean);
+if (sentences.length !== 2 || entry.length > 400) {
+  process.stderr.write("entry must be exactly two sentences, at most 400 characters\n");
+  process.exit(1);
+}
 process.stdout.write(entry);
